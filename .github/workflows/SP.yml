@@ -9,3 +9,9 @@ jobs:
     steps:
       - name: list files
         run: echo "Hello, world!"
+  job_2:
+    needs: my-job
+    runs-on: ubuntu-latest
+    steps:
+      - name: list files
+        run: echo "Hello, world!"     
