@@ -1,24 +1,20 @@
-name: my-workflow
-on:
+name: Matrix Hello World
+
+on: 
   push:
-    branches:
-      - main
+
 jobs:
-    ascii_job:
-      runs-on: ubuntu-latest
-      
-      steps:
-        - name: Install cowsay program
-          run: sudo apt-get install cowsay -y
+  hello:
+    runs-on: ${{ matrix.os }}
 
-        - name: Run cowsay with dragon
-          run: cowsay -f dragon "Run for cover, iam a Dragon... RAWRR" >> dragon.txt
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
-        - name: Test File Exists
-          run: grep -i "dragon" dragon.txt
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-        - name: Read File
-          run: cat dragon.txt
-
-        - name: List repo files
-          run: ls
+      - name: Run Hello World script
+        run: ./script.sh ${{ matrix.os }}
+        shell: bash
